@@ -1,0 +1,44 @@
+﻿@page "/login"
+@inject NavigationManager NavigationManager
+@inject CustomAuthStateProvider AuthStateProvider
+
+<h3>Login</h3>
+
+<EditForm Model="@_loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="username">Username:</label>
+    <InputText id="username" @bind-Value="_loginModel.Username" />
+
+    <label for="role">Role:</label>
+    <InputText id="role" @bind-Value="_loginModel.Role" />
+
+    <button type="submit">Login</button>
+</EditForm>
+
+@code {
+    private readonly LoginModel _loginModel = new();
+
+    private string? _returnUrl;
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        _returnUrl = query["returnUrl"];
+    }
+
+    private async Task HandleLogin()
+    {
+        await AuthStateProvider.Login(_loginModel.Username, _loginModel.Role);
+
+        NavigationManager.NavigateTo(_returnUrl ?? "/");
+    }
+
+    public class LoginModel
+    {
+        public string Username { get; set; }
+        public string Role { get; set; }
+    }
+}
