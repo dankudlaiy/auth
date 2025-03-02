@@ -1,0 +1,20 @@
+﻿@using Blazor.Diagrams.Components.Renderers;
+
+<div>
+    <input class="custom-input" @bind-value="Node.Trigger" placeholder="Action" />
+    <select class="custom-input" @bind="Node.SelectedAction">
+        @foreach (var action in Node.Actions)
+        {
+            <option value="@action.Id">@action.Name</option>
+        }
+    </select>
+
+    @foreach (var port in Node.Ports)
+    {
+        <PortRenderer @key="port" Port="port" />
+    }
+</div>
+
+@code {
+    [Parameter] public NodeWrapper Node { get; set; } = null!;
+}

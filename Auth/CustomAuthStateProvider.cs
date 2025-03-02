@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 
-namespace auth;
+namespace auth.Auth;
 
 public class CustomAuthStateProvider : AuthenticationStateProvider
 {
