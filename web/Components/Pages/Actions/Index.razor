@@ -1,0 +1,50 @@
+﻿@page "/actions"
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using web.Data
+@inject IDbContextFactory<AuthDbContext> DbFactory
+@implements IAsyncDisposable
+
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <input type="search" @bind="titleFilter" @bind:event="oninput" />
+</p>
+
+<p>
+    <a href="actions/create">Create New</a>
+</p>
+
+<div>
+    <QuickGrid Class="table" Items="FilteredMovies" Pagination="pagination">
+        <PropertyColumn Property="movie => movie.Id" Sortable="true" />
+        <PropertyColumn Property="movie => movie.Name" Title="Name" />
+
+        <TemplateColumn Context="movie">
+            <a href="@($"actions/delete?id={movie.Id}")">Delete</a>
+        </TemplateColumn>
+    </QuickGrid>
+</div>
+
+<Paginator State="pagination" />
+
+
+@code {
+    private PaginationState pagination = new PaginationState { ItemsPerPage = 5 };
+    private string titleFilter = string.Empty;
+    private AuthDbContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    private IQueryable<TelephonyAction> FilteredMovies => 
+        context.Actions.Where(m => m.Name!.Contains(titleFilter));
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

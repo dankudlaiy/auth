@@ -1,0 +1,42 @@
+﻿@* @page "/login" *@
+@* @using auth.Auth *@
+@* @using web.Auth *@
+@* @inject NavigationManager NavigationManager *@
+@* @inject CustomAuthStateProvider AuthStateProvider *@
+@* *@
+@* <h3>Login</h3> *@
+@* *@
+@* <EditForm Model="@_loginModel" OnValidSubmit="HandleLogin"> *@
+@*     <DataAnnotationsValidator /> *@
+@*     <ValidationSummary /> *@
+@* *@
+@*     $1$ <label for="username">Username:</label> #1# *@
+@*     $1$ <InputText id="username" @bind-Value="_loginModel.Username" /> #1# *@
+@* *@
+@*     <button type="submit">Login</button> *@
+@* </EditForm> *@
+@* *@
+@* @code { *@
+@*     private readonly LoginModel _loginModel = new(); *@
+@* *@
+@*     private string? _returnUrl; *@
+@* *@
+@*     protected override void OnInitialized() *@
+@*     { *@
+@*         var uri = new Uri(NavigationManager.Uri); *@
+@*         var query = System.Web.HttpUtility.ParseQueryString(uri.Query); *@
+@*         _returnUrl = query["returnUrl"]; *@
+@*     } *@
+@* *@
+@*     private async Task HandleLogin() *@
+@*     { *@
+@*         await AuthStateProvider.Login(_loginModel.Username); *@
+@* *@
+@*         NavigationManager.NavigateTo(_returnUrl ?? "/"); *@
+@*     } *@
+@* *@
+@*     public class LoginModel *@
+@*     { *@
+@*         public string Username { get; set; } *@
+@*     } *@
+@* } *@
