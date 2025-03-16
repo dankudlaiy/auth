@@ -1,0 +1,59 @@
+﻿@page "/"
+@page "/diagrams"
+@using Blazor.Diagram.Demo.Data
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@implements IAsyncDisposable
+@rendermode InteractiveServer
+@attribute [Authorize]
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <input type="search" @bind="titleFilter" @bind:event="oninput" />
+</p>
+
+<p>
+    <a href="diagrams/create">Create New</a>
+</p>
+
+<div>
+    <QuickGrid Class="table" Items="FilteredDiagrams" Pagination="pagination">
+        <PropertyColumn Property="diagram => diagram.Id" Sortable="true" />
+        <PropertyColumn Property="diagram => diagram.Name" Title="Name" />
+
+        <TemplateColumn Context="diagram">
+            <a href="@($"diagrams/details?id={diagram.Id}")">Details</a> |
+            <a href="@($"diagrams/delete?id={diagram.Id}")">Delete</a>
+        </TemplateColumn>
+    </QuickGrid>
+</div>
+
+<Paginator State="pagination" />
+
+@code {
+    private PaginationState pagination = new() { ItemsPerPage = 5 };
+    private string titleFilter = string.Empty;
+    private ApplicationDbContext context = null!;
+    private string _currentUserId = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _currentUserId = authState.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier"))?.Value ?? string.Empty; 
+
+        context = await DbFactory.CreateDbContextAsync();
+    }
+
+    private IQueryable<Diagram> FilteredDiagrams => context.Diagrams
+            .Where(m => m.Name.Contains(titleFilter))
+            .Where(m => m.UserId == _currentUserId);
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

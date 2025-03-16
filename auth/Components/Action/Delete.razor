@@ -14,24 +14,24 @@
 <div>
     <h2>Action</h2>
     <hr />
-    @if (movie is null)
+    @if (_action is null)
     {
         <p><em>Loading...</em></p>
     }
     else {
         <dl class="row">
             <dt class="col-sm-2">Name</dt>
-            <dd class="col-sm-10">@movie.Name</dd>
+            <dd class="col-sm-10">@_action.Name</dd>
         </dl>
-        <EditForm method="post" Model="movie" OnValidSubmit="DeleteMovie" FormName="delete" Enhance>
-            <button type="submit" class="btn btn-danger" disabled="@(movie is null)">Delete</button> |
+        <EditForm method="post" Model="_action" OnValidSubmit="DeleteMovie" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(_action is null)">Delete</button> |
             <a href="/actions">Back to List</a>
         </EditForm>
     }
 </div>
 
 @code {
-    private TelephonyAction? movie;
+    private TelephonyAction? _action;
 
     [SupplyParameterFromQuery]
     private int Id { get; set; }
@@ -39,9 +39,9 @@
     protected override async Task OnInitializedAsync()
     {
         await using var context = await DbFactory.CreateDbContextAsync();
-        movie = await context.Actions.FirstOrDefaultAsync(m => m.Id == Id);
+        _action = await context.Actions.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (movie is null)
+        if (_action is null)
         {
             NavigationManager.NavigateTo("notfound");
         }
@@ -50,7 +50,7 @@
     private async Task DeleteMovie()
     {
         await using var context = await DbFactory.CreateDbContextAsync();
-        context.Actions.Remove(movie!);
+        context.Actions.Remove(_action!);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/actions");
     }

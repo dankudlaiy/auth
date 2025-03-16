@@ -1,0 +1,51 @@
+﻿@page "/actions"
+@rendermode InteractiveServer
+@using Blazor.Diagram.Demo.Data
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@implements IAsyncDisposable
+@attribute [Authorize(Roles = "Admin")]
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <input type="search" @bind="titleFilter" @bind:event="oninput" />
+</p>
+
+<p>
+    <a href="actions/create">Create New</a>
+</p>
+
+<div>
+    <QuickGrid Class="table" Items="FilteredActions" Pagination="pagination">
+        <PropertyColumn Property="action => action.Id" Sortable="true" />
+        <PropertyColumn Property="action => action.Name" Title="Name" />
+
+        <TemplateColumn Context="action">
+            <a href="@($"actions/delete?id={action.Id}")">Delete</a>
+        </TemplateColumn>
+    </QuickGrid>
+</div>
+
+<Paginator State="pagination" />
+
+
+@code {
+    private PaginationState pagination = new() { ItemsPerPage = 5 };
+    private string titleFilter = string.Empty;
+    private ApplicationDbContext context = null!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    private IQueryable<TelephonyAction> FilteredActions => 
+        context.Actions.Where(m => m.Name.Contains(titleFilter));
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

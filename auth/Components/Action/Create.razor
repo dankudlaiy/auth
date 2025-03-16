@@ -10,17 +10,17 @@
 
 <h1>Create</h1>
 
-<h2>Movie</h2>
+<h2>Action</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <EditForm method="post" Model="Movie" OnValidSubmit="AddMovie" FormName="create" Enhance>
+        <EditForm method="post" Model="Action" OnValidSubmit="AddMovie" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" />
             <div class="mb-3">
                 <label for="title" class="form-label">Name:</label>
-                <InputText id="title" @bind-Value="Movie.Name" class="form-control" />
-                <ValidationMessage For="() => Movie.Name" class="text-danger" />
+                <InputText id="title" @bind-Value="Action.Name" class="form-control" />
+                <ValidationMessage For="() => Action.Name" class="text-danger" />
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
@@ -34,12 +34,12 @@
 
 @code {
     [SupplyParameterFromForm]
-    private TelephonyAction Movie { get; set; } = new();
+    private TelephonyAction Action { get; set; } = new();
 
     private async Task AddMovie()
     {
         await using var context = await DbFactory.CreateDbContextAsync();
-        context.Actions.Add(Movie);
+        context.Actions.Add(Action);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/actions");
     }
