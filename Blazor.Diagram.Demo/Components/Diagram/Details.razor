@@ -1,4 +1,5 @@
 ﻿@page "/diagrams/details"
+@using Blazor.Diagram.Demo.Client.Models
 @using Blazor.Diagram.Demo.Data
 @using Blazor.Diagrams
 @using Microsoft.EntityFrameworkCore
@@ -28,18 +29,17 @@
             <dd class="col-sm-10">@_diagram.Name</dd>
         </dl>
         <div>
-            @* <a href="@($"/diagrams/delete?id={_diagram.Id}")">Delete</a> | *@
             <a href="@("/diagrams")">Back to List</a>
         </div>
-        <div class="w-full h-full relative" style="height: 1230px">
-            @* <DiagramWrapper Data=@_data/> *@
-            <Dashboard OnLayoutSaved="@HandleLayoutSaved" Data=@_diagram.Data/>
+        <div class="w-full h-full relative" style="height: 870px">
+            <Dashboard OnLayoutSaved="@HandleLayoutSaved" Data=@_diagram.Data Title=@_diagram.Name Actions=@_actions />
         </div>
     }
 </div>
 
 @code {
     private Diagram? _diagram;
+    private IEnumerable<TelephonyActionModel> _actions;
 
     [SupplyParameterFromQuery]
     private int Id { get; set; }
@@ -48,7 +48,9 @@
     {
         await using var context = await DbFactory.CreateDbContextAsync();
         _diagram = await context.Diagrams.FirstOrDefaultAsync(m => m.Id == Id);
-        
+        var actions = context.Actions.ToList();
+        _actions = actions.Select(x => new TelephonyActionModel { Id = x.Id, Name = x.Name }).ToList();
+
         if (_diagram is null)
         {
             NavigationManager.NavigateTo("notfound");

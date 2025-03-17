@@ -30,6 +30,6 @@
             PortAlignment.Left => "-left-4 top-[calc(50%-8px)]",
             _ => "",
         };
-        <Blazor.Diagrams.Components.Renderers.PortRenderer @key="(port, Node.FontColor)" Port="port" Class=@($"w-[16px] h-[16px] rounded-full opacity-0 bg-primary group-hover:opacity-50 absolute {portCss}") Style=@($"background-color: {Node.FontColor};") />
+        <Blazor.Diagrams.Components.Renderers.PortRenderer @key="(port, Node.FontColor)" Port="port" Class=@($"w-[16px] h-[16px] rounded-full bg-primary group-hover:opacity-50 absolute {portCss}") Style=@($"background-color: {Node.FontColor};") />
     }
 </div>

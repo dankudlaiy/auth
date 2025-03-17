@@ -879,6 +879,10 @@ html {
   background-color: var(--alert-bg);
 }
 
+.has-links {
+  background-color: #000;
+}
+
 @media (min-width: 640px) {
   .alert {
     grid-auto-flow: column;

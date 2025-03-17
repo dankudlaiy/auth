@@ -5,5 +5,4 @@ public class DashboardModel
     public string? Name { get; set; }
     public string? Description { get; set; }
     public required string Layout { get; set; }
-    public bool IsSaved { get; set; }
 }

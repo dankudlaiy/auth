@@ -21,7 +21,7 @@
     }
     <div class="absolute top-6 left-4 z-50 px-3 py-2 rounded-md bg-slate-10 shadow-sm opacity-90 flex flex-col gap-2 max-w-[300px] border-1px select-none bg-neutral-50">
         <div class="join flex justify-end">
-            <input @bind-value=name placeholder="Provide the dashboard title" required class="join-item input input-bordered input-sm w-full" autofocus tabindex="0" />
+            <input @bind-value=name placeholder="Provide the dashboard title" required class="join-item input input-bordered input-sm w-full" autofocus tabindex="0" disabled="@isInputDisabled" />
             <button class="join-item btn btn-sm btn-primary" @onclick="Save">Save</button>
         </div>
         <p>
@@ -65,6 +65,11 @@
     var selectedNodeCount = selectedItems.Where(x => x is NodeModelBase).Count();
 
     <ContextMenu Id="dashboardMenu" ShownCssClass="rounded-md shadow-lg border-1px border-slate-100">
+        <Item OnClick="e => AddNode(e, new ActionNodeModel(Actions))">
+            <div class="flex items-center gap-2">
+                Add Action
+            </div>
+        </Item>
         <Item OnClick="e => AddNode(e, new TextNodeModel())">
             <div class="flex items-center gap-2">
                 Add Text

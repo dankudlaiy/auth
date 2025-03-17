@@ -4,6 +4,7 @@ using Blazor.Diagrams.Core.Models;
 
 namespace Blazor.Diagram.Demo.Client.Pages.Dashboard.Nodes;
 
+[JsonDerivedType(typeof(ActionNodeModel), typeDiscriminator: nameof(ActionNodeModel))]
 [JsonDerivedType(typeof(TextNodeModel), typeDiscriminator: nameof(TextNodeModel))]
 [JsonDerivedType(typeof(UrlNodeModel), typeDiscriminator: nameof(UrlNodeModel))]
 [JsonDerivedType(typeof(ImageNodeModel), typeDiscriminator: nameof(ImageNodeModel))]
@@ -14,6 +15,7 @@ public class NodeModelBase : NodeModel
 
     public static void RegisterAllDerivedModels(BlazorDiagram diagram)
     {
+        diagram.RegisterComponent<ActionNodeModel, ActionNode>();
         diagram.RegisterComponent<TextNodeModel, TextNode>();
         diagram.RegisterComponent<UrlNodeModel, UrlNode>();
         diagram.RegisterComponent<ImageNodeModel, ImageNode>();

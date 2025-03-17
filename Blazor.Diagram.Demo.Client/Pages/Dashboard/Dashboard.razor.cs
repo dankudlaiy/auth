@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Blazor.Diagram.Demo.Client.Models;
 using Blazor.Diagram.Demo.Client.Pages.Dashboard.Behaviors;
 using Blazor.Diagram.Demo.Client.Pages.Dashboard.Links;
 using Blazor.Diagram.Demo.Client.Pages.Dashboard.Nodes;
@@ -19,6 +20,8 @@ public partial class Dashboard
 {
     [Parameter] public EventCallback<string> OnLayoutSaved { get; set; }
     [Parameter] public string? Data { get; set; }
+    [Parameter] public required string? Title { get; set; }
+    [Parameter] public IEnumerable<TelephonyActionModel> Actions { get; set; }
     [Inject] public required NavigationManager NavigationManager { get; set; }
     [Inject] public required ILocalStorageService LocalStorageService { get; set; }
 
@@ -31,6 +34,7 @@ public partial class Dashboard
     private bool isPointerReleased = true;
     private BlazorDiagram diagram = null!;
     private Model? editingModel;
+    private bool isInputDisabled = true;
 
     protected override void OnInitialized()
     {
@@ -179,10 +183,9 @@ public partial class Dashboard
             var layout = DashboardLayout.FromModels(diagram.Nodes, diagram.Links).SerializeAsJson();
             var dashboardModel = new DashboardModel
             {
-                Name = name,
+                Name = Title,
                 Description = descrition,
-                Layout = layout,
-                IsSaved = false
+                Layout = layout
             };
             var data = JsonSerializer.Serialize(dashboardModel);
 
@@ -219,7 +222,7 @@ public partial class Dashboard
             diagram.Nodes.Clear();
             diagram.Links.Clear();
 
-            name = dashboard.Name;
+            name = Title;
             descrition = dashboard.Description;
             DashboardLayout.FromJson(dashboard.Layout).ApplyToDiagram(diagram, StyledLinkModel_Changed);
         }
