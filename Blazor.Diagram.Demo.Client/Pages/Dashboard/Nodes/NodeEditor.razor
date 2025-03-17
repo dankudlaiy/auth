@@ -24,6 +24,17 @@
                         <option value="@item.Id">@item.Name</option>
                     }
                 </select>
+            } else if (property.Name == nameof(ActionNodeModel.Keyword))
+            {
+                <select
+                    value=@(value?.ToString() ?? "")
+                    @onchange="x => {if (int.TryParse(x.Value?.ToString(), out var v)) setValue(v);  }"
+                    class="select select-sm select-bordered join-item w-full">
+                    @foreach (var item in Keywords)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
             }
             else
             {

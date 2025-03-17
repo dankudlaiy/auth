@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Blazor.Diagram.Demo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250317011138_Initial")]
+    [Migration("20250317145113_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -113,6 +113,23 @@ namespace Blazor.Diagram.Demo.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Diagrams");
+                });
+
+            modelBuilder.Entity("Blazor.Diagram.Demo.Data.Keyword", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Keywords");
                 });
 
             modelBuilder.Entity("Blazor.Diagram.Demo.Data.TelephonyAction", b =>

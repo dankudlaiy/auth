@@ -65,6 +65,19 @@ namespace Blazor.Diagram.Demo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Keywords",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Keywords", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -257,6 +270,9 @@ namespace Blazor.Diagram.Demo.Migrations
 
             migrationBuilder.DropTable(
                 name: "Diagrams");
+
+            migrationBuilder.DropTable(
+                name: "Keywords");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,4 +1,4 @@
-﻿@page "/actions/create"
+﻿@page "/keywords/create"
 @using Blazor.Diagram.Demo.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
@@ -10,17 +10,17 @@
 
 <h1>Create</h1>
 
-<h2>Action</h2>
+<h2>Keyword</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <EditForm method="post" Model="Action" OnValidSubmit="AddAction" FormName="create" Enhance>
+        <EditForm method="post" Model="Keyword" OnValidSubmit="AddKeyword" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" />
             <div class="mb-3">
                 <label for="title" class="form-label">Name:</label>
-                <InputText id="title" @bind-Value="Action.Name" class="form-control" />
-                <ValidationMessage For="() => Action.Name" class="text-danger" />
+                <InputText id="title" @bind-Value="Keyword.Name" class="form-control" />
+                <ValidationMessage For="() => Keyword.Name" class="text-danger" />
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
@@ -28,19 +28,19 @@
 </div>
 
 <div>
-    <a href="/actions">Back to List</a>
+    <a href="/keywords">Back to List</a>
 </div>
 
 
 @code {
     [SupplyParameterFromForm]
-    private TelephonyAction Action { get; set; } = new();
+    private Keyword Keyword { get; set; } = new();
 
-    private async Task AddAction()
+    private async Task AddKeyword()
     {
         await using var context = await DbFactory.CreateDbContextAsync();
-        context.Actions.Add(Action);
+        context.Keywords.Add(Keyword);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/actions");
+        NavigationManager.NavigateTo("/keywords");
     }
 }

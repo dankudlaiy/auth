@@ -84,4 +84,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Blazor.Diagram.Demo.Client._Imports).Assembly);
 
+app.MapAdditionalIdentityEndpoints();
+
 app.Run();

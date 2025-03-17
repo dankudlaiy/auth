@@ -8,4 +8,5 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Diagram> Diagrams { get; set; }
     public DbSet<TelephonyAction> Actions { get; set; }
+    public DbSet<Keyword> Keywords { get; set; }
 }

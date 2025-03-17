@@ -32,7 +32,7 @@
             <a href="@("/diagrams")">Back to List</a>
         </div>
         <div class="w-full h-full relative" style="height: 870px">
-            <Dashboard OnLayoutSaved="@HandleLayoutSaved" Data=@_diagram.Data Title=@_diagram.Name Actions=@_actions />
+            <Dashboard OnLayoutSaved="@HandleLayoutSaved" Data=@_diagram.Data Title=@_diagram.Name Actions=@_actions Keywords="@_keywords"/>
         </div>
     }
 </div>
@@ -40,6 +40,7 @@
 @code {
     private Diagram? _diagram;
     private IEnumerable<TelephonyActionModel> _actions;
+    private IEnumerable<KeywordModel> _keywords;
 
     [SupplyParameterFromQuery]
     private int Id { get; set; }
@@ -50,6 +51,8 @@
         _diagram = await context.Diagrams.FirstOrDefaultAsync(m => m.Id == Id);
         var actions = context.Actions.ToList();
         _actions = actions.Select(x => new TelephonyActionModel { Id = x.Id, Name = x.Name }).ToList();
+        var keywords = context.Keywords.ToList();
+        _keywords = keywords.Select(x => new KeywordModel { Id = x.Id, Name = x.Name }).ToList();
 
         if (_diagram is null)
         {

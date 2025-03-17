@@ -27,7 +27,7 @@ public class ActionNodeModel : NodeModelBase
     public int? Action { get; set; }
 
     [NodeParameter("Keyword")]
-    public string? Keyword { get; set; }
+    public int? Keyword { get; set; }
 
     [NodeParameter("Data")]
     public string? Data { get; set; }

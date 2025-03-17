@@ -7,6 +7,7 @@ public partial class NodeEditor<T> where T : NodeModelBase
 {
     [Parameter] public required T NodeModel { get; set; }
     [Parameter] public IEnumerable<TelephonyActionModel> Actions { get; set; }
+    [Parameter] public IEnumerable<KeywordModel> Keywords { get; set; }
 
     private string title = "";
     private IEnumerable<(PropertyInfo Property, NodeParameterAttribute ParameterAttr)> properties = [];

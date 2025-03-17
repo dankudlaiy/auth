@@ -112,6 +112,23 @@ namespace Blazor.Diagram.Demo.Migrations
                     b.ToTable("Diagrams");
                 });
 
+            modelBuilder.Entity("Blazor.Diagram.Demo.Data.Keyword", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Keywords");
+                });
+
             modelBuilder.Entity("Blazor.Diagram.Demo.Data.TelephonyAction", b =>
                 {
                     b.Property<int>("Id")

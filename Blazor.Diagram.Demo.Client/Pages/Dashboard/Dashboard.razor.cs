@@ -22,6 +22,7 @@ public partial class Dashboard
     [Parameter] public string? Data { get; set; }
     [Parameter] public required string? Title { get; set; }
     [Parameter] public IEnumerable<TelephonyActionModel> Actions { get; set; }
+    [Parameter] public IEnumerable<KeywordModel> Keywords { get; set; }
     [Inject] public required NavigationManager NavigationManager { get; set; }
     [Inject] public required ILocalStorageService LocalStorageService { get; set; }
 
@@ -30,8 +31,8 @@ public partial class Dashboard
     private string? name { get; set; }
     private string? descrition { get; set; }
     private bool isLoading = true;
-    private bool showGrid = true;
-    private bool isPointerReleased = true;
+    private bool showGrid = false;
+    private bool isPointerReleased = true;  
     private BlazorDiagram diagram = null!;
     private Model? editingModel;
     private bool isInputDisabled = true;

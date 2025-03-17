@@ -8,11 +8,12 @@
 @code {
     [Parameter] public required Model EditingModel { get; set; }
     [Parameter] public IEnumerable<TelephonyActionModel> Actions { get; set; }
+    [Parameter] public IEnumerable<KeywordModel> Keywords { get; set; }
 }
 
 @if (EditingModel is NodeModelBase nodeModel)
 {
-    <NodeEditor NodeModel="@nodeModel" Actions="Actions" />
+    <NodeEditor NodeModel="@nodeModel" Actions="Actions" Keywords="Keywords"/>
 }
 else if (EditingModel is LinkModel linkModel)
 {
