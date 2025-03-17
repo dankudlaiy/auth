@@ -19,6 +19,7 @@
 	  <_ContentIncludedByDefault Remove="Pages\Action\Create.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\Action\Delete.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\Action\Index.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\Diagram\DiagramWrapper.razor" />
 	</ItemGroup>
 
 </Project>

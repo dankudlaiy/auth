@@ -1,12 +1,9 @@
 ﻿@page "/diagrams/details"
 @using Blazor.Diagram.Demo.Client.Models
 @using Blazor.Diagram.Demo.Data
-@using Blazor.Diagrams
 @using Microsoft.EntityFrameworkCore
-@using Blazor.Diagram.Demo.Client.Pages.Diagram
 @using Microsoft.AspNetCore.Authorization
 @using Blazor.Diagram.Demo.Client.Pages.Dashboard
-@using Blazored.LocalStorage
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 @attribute [Authorize]
@@ -31,7 +28,7 @@
         <div>
             <a href="@("/diagrams")">Back to List</a>
         </div>
-        <div class="w-full h-full relative" style="height: 870px">
+        <div class="w-full h-full relative" style="height: 93vh">
             <Dashboard OnLayoutSaved="@HandleLayoutSaved" Data=@_diagram.Data Title=@_diagram.Name Actions=@_actions Keywords="@_keywords"/>
         </div>
     }
