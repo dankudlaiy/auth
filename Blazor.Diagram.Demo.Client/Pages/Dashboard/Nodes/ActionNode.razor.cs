@@ -12,12 +12,8 @@ public partial class ActionNode
 [NodeParameter("Action Node")]
 public class ActionNodeModel : NodeModelBase
 {
-    private IEnumerable<TelephonyActionModel> _actions;
-    
-    public ActionNodeModel(IEnumerable<TelephonyActionModel> actions)
+    public ActionNodeModel()
     {
-        _actions = actions;
-
         AddPort(PortAlignment.Top);
         AddPort(PortAlignment.Right);
         AddPort(PortAlignment.Bottom);
@@ -28,7 +24,7 @@ public class ActionNodeModel : NodeModelBase
     public new string Title { get; set; }
 
     [NodeParameter("Action")]
-    public string? Action { get; set; }
+    public int? Action { get; set; }
 
     [NodeParameter("Keyword")]
     public string? Keyword { get; set; }

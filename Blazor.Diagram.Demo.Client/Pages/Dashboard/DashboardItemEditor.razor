@@ -1,4 +1,5 @@
-﻿@using Blazor.Diagrams.Core.Models
+﻿@using Blazor.Diagram.Demo.Client.Models
+@using Blazor.Diagrams.Core.Models
 @using Blazor.Diagrams.Core.Models.Base
 @using Blazor.Diagrams.Core.Routers
 @using Blazor.Diagram.Demo.Client.Pages.Dashboard.Links
@@ -6,11 +7,12 @@
 
 @code {
     [Parameter] public required Model EditingModel { get; set; }
+    [Parameter] public IEnumerable<TelephonyActionModel> Actions { get; set; }
 }
 
 @if (EditingModel is NodeModelBase nodeModel)
 {
-    <NodeEditor NodeModel="@nodeModel" />
+    <NodeEditor NodeModel="@nodeModel" Actions="Actions" />
 }
 else if (EditingModel is LinkModel linkModel)
 {

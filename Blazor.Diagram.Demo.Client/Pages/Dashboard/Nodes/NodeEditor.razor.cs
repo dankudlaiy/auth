@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
+using Blazor.Diagram.Demo.Client.Models;
 
 namespace Blazor.Diagram.Demo.Client.Pages.Dashboard.Nodes;
 
 public partial class NodeEditor<T> where T : NodeModelBase
 {
     [Parameter] public required T NodeModel { get; set; }
+    [Parameter] public IEnumerable<TelephonyActionModel> Actions { get; set; }
 
     private string title = "";
     private IEnumerable<(PropertyInfo Property, NodeParameterAttribute ParameterAttr)> properties = [];
